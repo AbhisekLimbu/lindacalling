@@ -39,6 +39,24 @@ Makefile         -> builds everything
 
 This project is mostly just me learning how computers boot up and talk to hardware. It's not meant to be fully featured (yet), but I’m hoping to learn a lot from it.
 
----
 
-Want to add any extra sections like "Things I've learned so far" or "Next steps"?
+
+### ✅ Cross-Compiler Setup on macOS
+
+Since macOS (especially on Apple Silicon) doesn't natively support compiling 32-bit i386 binaries, I built a custom cross-compiler (`i386-elf-gcc`) from source. This lets me compile my OS kernel directly on macOS without relying on a Linux VM for builds.
+
+**Steps:**
+
+* Downloaded and extracted `binutils` and `gcc` source code.
+* Configured `binutils` for the `i386-elf` target and installed it to `~/xos-toolchain`.
+* Configured GCC with `--target=i386-elf`, enabled C/C++, and disabled headers.
+* Compiled using `make all-gcc` and installed it.
+
+```bash
+$ i386-elf-gcc --version
+i386-elf-gcc (GCC) 13.1.0
+```
+
+This cross-compiler now builds the kernel binaries for XOS, which I run inside QEMU.
+
+
